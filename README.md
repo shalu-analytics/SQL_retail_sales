@@ -1,7 +1,12 @@
 # 📊 [Project Name: Retail Sales Data Analysis]
 
 ## 🎯 Project Objective
-The main objective of this project is to analyze retail transaction data to extract actionable business insights. This includes tracking performance trends, understanding customer purchasing behavior across different times of the day (shifts), and identifying top-performing product categories.
+The primary goals of this project are:
+1. **Data Cleaning & Exploration:** Identify and handle missing or null values in the retail dataset to ensure data integrity.
+2. **Sales Performance Analysis:** Track revenue trends over time, calculate total sales across different product categories, and pinpoint peak selling periods (months/years).
+3. **Customer Demographics Insights:** Segment customers based on age and gender to understand their purchasing behavior and preferences (e.g., top categories by demographic groups).
+4. **Operational Efficiency (Shift Analysis):** Categorize sales into hourly shifts (Morning, Afternoon, Evening) to analyze order volume patterns and help optimize store staffing.
+5. **High-Value Customer Identification:** Identify top-spending customers to help the marketing team design targeted loyalty programs.
 
 ---
 
@@ -23,111 +28,156 @@ The dataset consists of a `Retail_sales` table with the following key columns:
 
 ## 💡 Business Problems & SQL Solutions
 
-### 1. write a sql query to retrieve all customers for sales made on '11/5/2022'.
-**SQL Query:**
+## 💡 SQL Business Problems & Solutions
+
+### 1. Sales Made on a Specific Date
+**Problem:** Write a SQL query to retrieve all transactions for sales made on '2022-11-05'.
+
 ```sql
-select *
-from retail_sales
-where sale_date = '2022-11-05';
-'''
+SELECT *
+FROM retail_sales
+WHERE sale_date = '2022-11-05';
+```
+
 ---
-### 2. retrieve all transactions where the category is 'clothing' and the quantity sold is more than is in the month of nov-2022.
-**SQL Query:**
+
+### 2. High-Volume Clothing Sales (November 2022)
+**Problem:** Retrieve all transactions where the category is 'Clothing', the quantity sold is more than 3, and the transaction occurred in November 2022.
+
 ```sql
-select * from retail_sales
-where category like '%Clothing%' 
-and quantiy > 3
-and sale_date between '2022-11-01' and '2022-11-30';
-'''
+SELECT * 
+FROM retail_sales
+WHERE category = 'clothing' 
+  AND quantity > 3
+  AND sale_date BETWEEN '2022-11-01' AND '2022-11-30';
+```
+
 ---
-### 3.  write a sql query to calculate the total sales for each category.
-**SQL Query:**
+
+### 3. Total Sales by Category
+**Problem:** Write a SQL query to calculate the total sales for each category.
+
 ```sql
-select category, sum(total_sale) as total_sale 
-from retail_sales
-group by category;
-'''
+SELECT 
+    category, 
+    SUM(total_sale) AS total_sales
+FROM retail_sales
+GROUP BY category
+ORDER BY total_sales DESC;
+```
+
 ---
-### 4.  write a sql query to find the average age of customers who purchased items from the 'beauty' category.
-**SQL Query:**
+
+### 4. Average Age for Beauty Category
+**Problem:** Write a SQL query to find the average age of customers who purchased items from the 'Beauty' category.
+
 ```sql
-select  round(avg(age), 2) as average_age
-from  retail_sales
-where category = 'beauty'
-group by category;
-'''
+SELECT 
+    ROUND(AVG(age), 2) AS average_age
+FROM retail_sales
+WHER category = 'beauty';
+```
+
 ---
-### 5.  write a sql query to find all transactions where the total sales is greater than 1000.
-**SQL Query:**
+
+### 5. High-Value Transactions
+**Problem:** Write a SQL query to find all transactions where the total sales amount is greater than 1000.
+
 ```sql
-select *
-from retail_sales
-where total_sale > '1000' ;
-'''
+SELECT *
+FROM retail_sales
+WHERE total_sale > 1000;
+```
+
 ---
-### 6.  write a sql query to find the total number of transactions made by each gender to each category.
-**SQL Query:**
+
+### 6. Transaction Distribution by Gender and Category
+**Problem:** Write a SQL query to find the total number of transactions made by each gender to each category.
+
 ```sql
-select 
-    category, gender, count(*) as total_transaction
-from retail_sales
-group by category, gender
-order by 1;
-'''
+SELECT 
+    category, 
+    gender, 
+    COUNT(*) AS total_transactions
+FROM retail_sales
+GROUP BY category, gender
+ORDER BY category ASC;
+```
+
 ---
-### 7. write a sql query to calculate the average sale for each month. find out best selling month in each year.
-**SQL Query:**
+
+### 7. Monthly Average Sales and Yearly Best Sellers
+**Problem:** Write a SQL query to calculate the average sale for each month and find out the best-selling month in each year.
+
 ```sql
-select 
-    year(sale_date) as year, 
-    month(sale_date) as month, 
-    round(avg(total_sale), 2) as avg_sale
-from retail_sales
-group by 1,2 
-order by 1,3 desc ;
-'''
----
-### 8. write a sql query to find the top 5 customers bassed on the biggest total sale.
-**SQL Query:**
-```sql
-select customer_id,
-   sum(total_sale) as total_sale
-from retail_sales
-group by 1
-order by 2 desc
-limit 5;
-'''
----
-### 9.  write a sql query to find the number of unique customers who purchased items from each category.
-**SQL Query:**
-```sql
-select category,
-      count(distinct customer_id) as total_customers
-from retail_sales
-group by category;
-'''
----
-### 10. write a sql query to create each shift and number of orders(example morning <=12, afternoon between 12 &17, evening >17).
-**SQL Query:**
-```sql
-with hourly_sale
-as 
-(
-select *,
-   case
-      when hour(sale_time) <12 then 'morning'
-	  when hour(sale_time) between 12 and 17 then 'afternoon'
-      else 'evening'
-   end as shift
-from retail_sales
+WITH monthly_sales AS (
+    SELECT 
+        YEAR(sale_date) AS sale_year, 
+        MONTH(sale_date) AS sale_month, 
+        ROUND(AVG(total_sale), 2) AS avg_sale,
+        RANK() OVER (PARTITION BY YEAR(sale_date) ORDER BY SUM(total_sale) DESC) as ranking
+    FROM retail_sales
+    GROUP BY YEAR(sale_date), MONTH(sale_date)
 )
-select shift,
-       count(transactions_id) as total_orders
-from hourly_sale
-group by shift
-order by 2 asc;
-'''
+SELECT 
+    sale_year, 
+    sale_month, 
+    avg_sale
+FROM monthly_sales
+WHERE ranking = 1;
+```
+
 ---
+
+### 8. Top 5 Premium Customers
+**Problem:** Write a SQL query to find the top 5 customers based on the highest total sales.
+
+```sql
+SELECT 
+    customer_id,
+    SUM(total_sale) AS total_sales
+FROM retail_sales
+GROUP BY customer_id
+ORDER BY total_sales DESC
+LIMIT 5;
+```
+
+---
+
+### 9. Unique Customers by Category
+**Problem:** Write a SQL query to find the number of unique customers who purchased items from each category.
+
+```sql
+SELECT 
+    category,
+    COUNT(DISTINCT customer_id) AS total_customers
+FROM retail_sales
+GROUP BY category
+ORDER BY total_customers DESC;
+```
+
+---
+
+### 10. Order Count by Time Shifts
+**Problem:** Write a SQL query to create each shift and count the number of orders (Morning ≤ 12, Afternoon between 12 & 17, Evening > 17).
+
+```sql
+WITH hourly_sales AS (
+    SELECT *,
+        CASE
+            WHEN HOUR(sale_time) <= 12 THEN 'Morning'
+            WHEN HOUR(sale_time) > 12 AND HOUR(sale_time) <= 17 THEN 'Afternoon'
+            ELSE 'Evening'
+        END AS shift
+    FROM retail_sales
+)
+SELECT 
+    shift,
+    COUNT(*) AS total_orders
+FROM hourly_sales
+GROUP BY shift
+ORDER BY total_orders DESC;
+```
 
 ## 📈 Key Insights & Findings
 Based on the SQL analysis of the retail sales dataset, here are the major business insights discovered:
