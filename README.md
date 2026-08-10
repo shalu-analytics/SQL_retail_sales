@@ -28,10 +28,7 @@ The dataset consists of a `Retail_sales` table with the following key columns:
 
 ## 💡 Business Problems & SQL Solutions
 
-## 💡 SQL Business Problems & Solutions
-
-### 1. Sales Made on a Specific Date
-**Problem:** Write a SQL query to retrieve all transactions for sales made on '2022-11-05'.
+### 1. write a sql query to retrieve all customers for sales made on '11/5/2022'
 
 ```sql
 SELECT *
@@ -41,8 +38,7 @@ WHERE sale_date = '2022-11-05';
 
 ---
 
-### 2. High-Volume Clothing Sales (November 2022)
-**Problem:** Retrieve all transactions where the category is 'Clothing', the quantity sold is more than 3, and the transaction occurred in November 2022.
+### 2. retrieve all transactions where the category is 'clothing' and the quantity sold is more than is in the month of nov-2022 
 
 ```sql
 SELECT * 
@@ -54,8 +50,7 @@ WHERE category = 'clothing'
 
 ---
 
-### 3. Total Sales by Category
-**Problem:** Write a SQL query to calculate the total sales for each category.
+### 3. Write a SQL query to calculate the total sales for each category.
 
 ```sql
 SELECT 
@@ -68,8 +63,7 @@ ORDER BY total_sales DESC;
 
 ---
 
-### 4. Average Age for Beauty Category
-**Problem:** Write a SQL query to find the average age of customers who purchased items from the 'Beauty' category.
+### 4.  Write a SQL query to find the average age of customers who purchased items from the 'Beauty' category.
 
 ```sql
 SELECT 
@@ -80,8 +74,7 @@ WHER category = 'beauty';
 
 ---
 
-### 5. High-Value Transactions
-**Problem:** Write a SQL query to find all transactions where the total sales amount is greater than 1000.
+### 5. Write a SQL query to find all transactions where the total sales amount is greater than 1000.
 
 ```sql
 SELECT *
@@ -91,8 +84,7 @@ WHERE total_sale > 1000;
 
 ---
 
-### 6. Transaction Distribution by Gender and Category
-**Problem:** Write a SQL query to find the total number of transactions made by each gender to each category.
+### 6. Write a SQL query to find the total number of transactions made by each gender to each category.
 
 ```sql
 SELECT 
@@ -106,8 +98,7 @@ ORDER BY category ASC;
 
 ---
 
-### 7. Monthly Average Sales and Yearly Best Sellers
-**Problem:** Write a SQL query to calculate the average sale for each month and find out the best-selling month in each year.
+### 7. Write a SQL query to calculate the average sale for each month and find out the best-selling month in each year.
 
 ```sql
 WITH monthly_sales AS (
@@ -129,8 +120,7 @@ WHERE ranking = 1;
 
 ---
 
-### 8. Top 5 Premium Customers
-**Problem:** Write a SQL query to find the top 5 customers based on the highest total sales.
+### 8. Write a SQL query to find the top 5 customers based on the highest total sales.
 
 ```sql
 SELECT 
@@ -144,8 +134,7 @@ LIMIT 5;
 
 ---
 
-### 9. Unique Customers by Category
-**Problem:** Write a SQL query to find the number of unique customers who purchased items from each category.
+### 9. Write a SQL query to find the number of unique customers who purchased items from each category.
 
 ```sql
 SELECT 
@@ -158,8 +147,7 @@ ORDER BY total_customers DESC;
 
 ---
 
-### 10. Order Count by Time Shifts
-**Problem:** Write a SQL query to create each shift and count the number of orders (Morning ≤ 12, Afternoon between 12 & 17, Evening > 17).
+### 10. Write a SQL query to create each shift and count the number of orders (Morning ≤ 12, Afternoon between 12 & 17, Evening > 17).
 
 ```sql
 WITH hourly_sales AS (
