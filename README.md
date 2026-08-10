@@ -26,7 +26,7 @@ The dataset consists of a `Retail_sales` table with the following key columns:
 
 ---
 
-## 💡 Business Problems & SQL Solutions
+## 💡 SQL Query Solutions
 
 ### 1. write a sql query to retrieve all customers for sales made on '11/5/2022'
 
