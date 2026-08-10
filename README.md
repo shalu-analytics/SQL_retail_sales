@@ -30,9 +30,7 @@ select *
 from retail_sales
 where sale_date = '2022-11-05';
 '''
-
 ---
-
 ### 2. retrieve all transactions where the category is 'clothing' and the quantity sold is more than is in the month of nov-2022.
 **SQL Query:**
 ```sql
@@ -41,9 +39,7 @@ where category like '%Clothing%'
 and quantiy > 3
 and sale_date between '2022-11-01' and '2022-11-30';
 '''
-
 ---
-
 ### 3.  write a sql query to calculate the total sales for each category.
 **SQL Query:**
 ```sql
@@ -51,9 +47,7 @@ select category, sum(total_sale) as total_sale
 from retail_sales
 group by category;
 '''
-
 ---
-
 ### 4.  write a sql query to find the average age of customers who purchased items from the 'beauty' category.
 **SQL Query:**
 ```sql
@@ -62,9 +56,7 @@ from  retail_sales
 where category = 'beauty'
 group by category;
 '''
-
 ---
-
 ### 5.  write a sql query to find all transactions where the total sales is greater than 1000.
 **SQL Query:**
 ```sql
@@ -72,9 +64,7 @@ select *
 from retail_sales
 where total_sale > '1000' ;
 '''
-
 ---
-
 ### 6.  write a sql query to find the total number of transactions made by each gender to each category.
 **SQL Query:**
 ```sql
@@ -84,9 +74,7 @@ from retail_sales
 group by category, gender
 order by 1;
 '''
-
 ---
-
 ### 7. write a sql query to calculate the average sale for each month. find out best selling month in each year.
 **SQL Query:**
 ```sql
@@ -98,9 +86,7 @@ from retail_sales
 group by 1,2 
 order by 1,3 desc ;
 '''
-
 ---
-
 ### 8. write a sql query to find the top 5 customers bassed on the biggest total sale.
 **SQL Query:**
 ```sql
@@ -111,9 +97,7 @@ group by 1
 order by 2 desc
 limit 5;
 '''
-
 ---
-
 ### 9.  write a sql query to find the number of unique customers who purchased items from each category.
 **SQL Query:**
 ```sql
@@ -122,9 +106,7 @@ select category,
 from retail_sales
 group by category;
 '''
-
 ---
-
 ### 10. write a sql query to create each shift and number of orders(example morning <=12, afternoon between 12 &17, evening >17).
 **SQL Query:**
 ```sql
@@ -145,7 +127,6 @@ from hourly_sale
 group by shift
 order by 2 asc;
 '''
-
 ---
 
 ## 📈 Key Insights & Findings
