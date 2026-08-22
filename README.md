@@ -188,5 +188,5 @@ Based on the SQL analysis of the retail sales dataset, here are the major busine
 
 ## 🛠️ Tech Stack & Tools Used
 *   **Database Engine:** MySQL 8.0
-*   **Tool:** MySQL Workbench / DBeaver
+*   **Tool:** MySQL Workbench 
 *   **Language:** SQL (Structured Query Language)
